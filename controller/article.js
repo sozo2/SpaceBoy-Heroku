@@ -29,10 +29,11 @@ module.exports = {
                     //     data: req.file.path,
                     //     contentType: req.file.mimetype
                     // },
-                    image_src: "https://spaceboy.s3.us-east-2.amazonaws.com/" + req.body.article_filename,
+                    image_src: "https://spaceboy.s3.us-east-2.amazonaws.com" + req.file.path,
                     mark_as_deleted: false 
                 });
                 console.log("456");
+                console.log(article.image_src);
                 user._articles.push(article);
                 user.save(function(err,user){
                     article.save(function (err, article) {
@@ -77,7 +78,7 @@ module.exports = {
                 //     data: req.file.path,
                 //     contentType: req.file.mimetype
                 // }
-                article.image_src = "https://spaceboy.s3.us-east-2.amazonaws.com/" + req.body.article_filename;
+                article.image_src = "https://spaceboy.s3.us-east-2.amazonaws.com" + req.file.path;
                 article.save(function(err, article){
                     if(err){
                         console.log(err);

@@ -62,39 +62,7 @@ class NewPost extends Component {
             articleImage: e.target.files[0]
         });
     }
-
-    // uploadFile(file, signedRequest, url){
-    //     const xhr = new XMLHttpRequest();
-    //     xhr.open('PUT', signedRequest);
-    //     xhr.onreadystatechange = () => {
-    //       if(xhr.readyState === 4){
-    //         if(xhr.status === 200){
-    //           console.log("Image upload successful: " + url);
-    //         }
-    //         else{
-    //           console.log('Could not upload file.');
-    //         }
-    //       }
-    //     };
-    //     xhr.send(file);
-    // }
-
-    // getSignedRequest(file, newfilename){
-    //     const xhr = new XMLHttpRequest();
-    //     xhr.open('GET', `/api/post/sign-s3?file-name=${file.name}&file-type=${file.type}`);
-    //     xhr.onreadystatechange = () => {
-    //       if(xhr.readyState === 4){
-    //         if(xhr.status === 200){
-    //           const response = JSON.parse(xhr.responseText);
-    //           uploadFile(file, response.signedRequest, response.url);
-    //         }
-    //         else{
-    //           alert('Could not get signed URL.');
-    //         }
-    //       }
-    //     };
-    //     xhr.send();
-    //   }
+    
 
     onSubmit(e) {
         e.preventDefault();
@@ -107,8 +75,7 @@ class NewPost extends Component {
         formData.append('article_description', this.state.article_description);
         formData.append('article_category', this.state.article_category);
         formData.append('article_content', this.state.article_content);
-        formData.append('article_filename', newfilename);
-        formData.append('article_tags', []);
+        // formData.append('article_tags', []);
         formData.append('articleImage', this.state.articleImage);
 
         axios.post('/api/post/create', formData)
