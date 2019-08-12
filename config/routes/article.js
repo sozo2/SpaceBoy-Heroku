@@ -5,7 +5,7 @@ var path = require("path");
 var aws = require('aws-sdk');
 var S3_BUCKET = process.env.S3_BUCKET;
 aws.config.region = 'eu-east-2';
-require("xmlhttprequest");
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 // const storage = multer.diskStorage({
 //     destination: (req, file, cb) => {
