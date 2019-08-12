@@ -3,10 +3,6 @@ var multer  = require('multer');
 const uuidv4 = require('uuid/v4');
 var path = require("path");
 var aws = require('aws-sdk');
-// var S3_BUCKET = process.env.S3_BUCKET;
-// aws.config.region = 'eu-east-2';
-// aws.config.bucket = S3_BUCKET;
-// var multerS3 = require('multer-s3');
 var s3 = new aws.S3({
     region: 'us-east-2',
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
@@ -17,8 +13,8 @@ var s3 = new aws.S3({
 module.exports = function (app) {
 
     app.post('/api/post/create', function (req, res) {
-        console.log("CREATE REQUEST");
-        console.log(req);
+        console.log("REQUEST:");
+        console.log(req.body);
         console.log(req.body.article_src);
         const file = req.body.articleImage;
         const params = {
