@@ -10,20 +10,20 @@ var s3 = new aws.S3({
     bucket: 'spaceboy'
 });
 
-var upload = multer({ dest: './uploads' })
+var upload = multer({destination: '/'});
 
 module.exports = function (app) {
 
-    app.post('/api/post/create', upload.single('articleImage'), function (req, res) {
+    app.post('/api/post/create', upload.single("articleImage"), function (req, res) {
         console.log("REQUEST:");
         console.log(req.body);
-        console.log(req.body.article_src);
+        console.log(req.file);
         const file = req.file;
         const params = {
             Bucket: 'spaceboy',
-            Key: "thisisatest.jpg",
+            Key: req.body.article_src,
             ACL: 'public-read',
-            Body: file
+            Body: req.file
         };
         console.log(params);
         s3.putObject(params, function (err, data) {
