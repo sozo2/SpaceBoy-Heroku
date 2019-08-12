@@ -3,11 +3,16 @@ var multer  = require('multer');
 const uuidv4 = require('uuid/v4');
 var path = require("path");
 var aws = require('aws-sdk');
-var S3_BUCKET = process.env.S3_BUCKET;
-aws.config.region = 'eu-east-2';
-aws.config.bucket = S3_BUCKET;
-var s3 = new aws.S3();
+// var S3_BUCKET = process.env.S3_BUCKET;
+// aws.config.region = 'eu-east-2';
+// aws.config.bucket = S3_BUCKET;
 var multerS3 = require('multer-s3');
+var s3 = new aws.S3({
+    region: 'us-east-2',
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    bucket: 'spaceboy'
+});
 
 // const storage = multer.diskStorage({
 //     destination: (req, file, cb) => {
@@ -22,27 +27,15 @@ var multerS3 = require('multer-s3');
 
 // const upload = multer({ storage });
 var upload = multer({
-    // storage: multerS3({
-    //     dirname: '/',
-    //     bucket: S3_BUCKET,
-    //     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    //     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    //     region: 'us-east-2',
-    //     filename: function (req, file, cb) {
-    //         const newFilename = `${uuidv4()}${path.extname(file.originalname)}`;
-    //         cb(null, newFilename);
-    //         // cb(null, file.originalname); //use Date.now() for unique file keys
-    //     }
-        storage: multerS3({
-            s3: s3,
-            bucket: S3_BUCKET,
-            key: function (req, file, cb) {
-                const newFilename = `${uuidv4()}${path.extname(file.originalname)}`;
-                cb(null, newFilename);
-                // cb(null, file.originalname); //use Date.now() for unique file keys
-            }
-        })
-    // })
+    storage: multerS3({
+        s3: s3,
+        bucket: S3_BUCKET,
+        key: function (req, file, cb) {
+            const newFilename = `${uuidv4()}${path.extname(file.originalname)}`;
+            cb(null, newFilename);
+            // cb(null, file.originalname); //use Date.now() for unique file keys
+        }
+    })
 });
 
 
