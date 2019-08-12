@@ -29,7 +29,7 @@ var s3 = new aws.S3({
 var upload = multer({
     storage: multerS3({
         s3: s3,
-        bucket: S3_BUCKET,
+        bucket: 'spaceboy',
         key: function (req, file, cb) {
             const newFilename = `${uuidv4()}${path.extname(file.originalname)}`;
             cb(null, newFilename);
