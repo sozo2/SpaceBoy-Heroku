@@ -7,12 +7,11 @@ var fs = require('fs');
 require('./config/mongoose.js');
 var PORT = process.env.PORT || 8000;
 
-var user_routes = require('./config/routes/user.js');
-var article_routes = require('./config/routes/article.js');
-var comment_routes = require('./config/routes/comment.js');
-
 var app = express();
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}))
 app.use(express.static('uploads'));
 app.use(express.static(path.join(__dirname, 'build')));
 
@@ -39,9 +38,13 @@ app.use(cors({
   }
 }));
 
-var aws = require('aws-sdk');
-var S3_BUCKET = process.env.S3_BUCKET;
-aws.config.region = 'eu-east-2';
+// var aws = require('aws-sdk');
+// var S3_BUCKET = process.env.S3_BUCKET;
+// aws.config.region = 'eu-east-2';
+
+var user_routes = require('./config/routes/user.js');
+var article_routes = require('./config/routes/article.js');
+var comment_routes = require('./config/routes/comment.js');
 
 user_routes(app);
 article_routes(app);
