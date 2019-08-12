@@ -54,6 +54,7 @@ var xhr = require("xmlhttprequest")
 
 module.exports = function (app) {
     app.post('/api/post/create', function (req, res) {
+        console.log(req.body.article_filename)
         getSignedRequest(req.file, req.body.article_filename);
         // console.log("Image uploaded successfully to: " + req.file.path);
         articles.createArticle(req, res);
