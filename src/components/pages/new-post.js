@@ -98,8 +98,9 @@ class NewPost extends Component {
 
     onSubmit(e) {
         e.preventDefault();
-        let newfilename = uuid() + "." + this.state.articleImage.name.replace(/^.*[\\\/]/, '');
+        let newfilename = uuid() + "." + this.state.articleImage.type.replace(/^.*[\\\/]/, '');
         console.log(newfilename);
+        console.log(this.state.article_creator);
         let formData = new FormData();
         formData.append('article_creator', this.state.article_creator);
         formData.append('article_title', this.state.article_title);

@@ -8,6 +8,7 @@ var User = mongoose.model('User');
 module.exports = {
 
     createArticle: function (req, res) {
+        console.log(req.body.article_creator);
         User.findOne({username: req.body.article_creator}, function(err, user){
             if (err){
                 console.log("can't post article error finding user");
