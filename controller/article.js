@@ -9,11 +9,14 @@ module.exports = {
 
     createArticle: function (req, res) {
         console.log(req.body.article_creator);
+        console.log("USER ^^ BODY vv");
+        console.log(req.body);
         User.findOne({username: req.body.article_creator}, function(err, user){
             if (err){
                 console.log("can't post article error finding user");
                 res.json(err);
             } else {
+                console.log("123");
                 var article = new Article({
                     _creator: user._id,
                     title: req.body.article_title,
@@ -29,6 +32,7 @@ module.exports = {
                     image_src: "https://spaceboy.s3.us-east-2.amazonaws.com/" + req.body.article_filename,
                     mark_as_deleted: false 
                 });
+                console.log("456");
                 user._articles.push(article);
                 user.save(function(err,user){
                     article.save(function (err, article) {

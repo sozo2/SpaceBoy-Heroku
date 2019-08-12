@@ -21,16 +21,6 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
     function uploadFile(file, signedRequest, url){
         const xhr = new XMLHttpRequest();
         xhr.open('PUT', signedRequest);
-        // xhr.onreadystatechange = () => {
-        //   if(xhr.readyState === 4){
-        //     if(xhr.status === 200){
-        //       console.log("Image upload successful: " + url);
-        //     }
-        //     else{
-        //       console.log('Could not upload file.');
-        //     }
-        //   }
-        // };
         xhr.send(file);
     }
 
@@ -62,8 +52,8 @@ module.exports = function (app) {
 
     app.get('/api/post/sign-s3', (req, res) => {
         const s3 = new aws.S3();
-        const fileName = req.body.fileName;
-        const fileType = req.body.fileType;
+        const fileName = req.query['file-name'];
+        const fileType = req.query['file-type'];
         const s3Params = {
           Bucket: S3_BUCKET,
           Key: fileName,
