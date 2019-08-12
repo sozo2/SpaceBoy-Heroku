@@ -81,7 +81,6 @@ class NewPost extends Component {
         axios.post('/api/post/create', formData)
             .then(function(res) { 
                 console.log(res.data);
-                this.props.history.push("/");
             });
 
 
@@ -93,7 +92,7 @@ class NewPost extends Component {
             article_content: '',
             articleImage: ''
         });
-        // this.props.history.push("/");
+        this.props.history.push("/");
     }
 
     render() {

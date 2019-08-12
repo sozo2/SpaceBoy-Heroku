@@ -29,7 +29,7 @@ module.exports = {
                     //     data: req.file.path,
                     //     contentType: req.file.mimetype
                     // },
-                    image_src: "https://spaceboy.s3.us-east-2.amazonaws.com/" + req.file.originalname,
+                    image_src: "https://spaceboy.s3.us-east-2.amazonaws.com/" + req.file.path,
                     mark_as_deleted: false 
                 });
                 console.log("456");
