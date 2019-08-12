@@ -30,10 +30,11 @@ var upload = multer({
     storage: multerS3({
         s3: s3,
         bucket: 'spaceboy',
+        ACL: 'public-read',
         key: function (req, file, cb) {
-            const newFilename = `${uuidv4()}${path.extname(file.originalname)}`;
-            cb(null, newFilename);
-            // cb(null, file.originalname); //use Date.now() for unique file keys
+            // const newFilename = `${uuidv4()}${path.extname(file.originalname)}`;
+            // cb(null, file.originalname);
+            cb(null, file.originalname); //use Date.now() for unique file keys
         }
     })
 });
@@ -64,6 +65,7 @@ module.exports = function (app) {
         //         articles.createArticle(req, res);
         //     }
         // })
+        console.log("Image uploaded successfully to: " + req.file.path);
         articles.createArticle(req, res);
     });
 
