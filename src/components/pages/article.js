@@ -28,7 +28,7 @@ class Article extends Component {
     }
 
     componentDidMount() {
-        axios.post(process.env.REACT_APP_API_ROOT+ "/api/post/get", {article_id: this.props.match.params.postId})
+        axios.post(process.env.MONGODB_URI+ "/api/post/get", {article_id: this.props.match.params.postId})
         .then((res) => {
             console.log(res.data);
             this.setState({
@@ -45,7 +45,7 @@ class Article extends Component {
     }; 
 
     deleteArticle = () => {
-        axios.post(process.env.REACT_APP_API_ROOT+ '/api/post/delete', {article_id: this.props.match.params.postId})
+        axios.post(process.env.MONGODB_URI+ '/api/post/delete', {article_id: this.props.match.params.postId})
         .then((res) => {
             console.log(res.data);
             this.props.history.push("/");

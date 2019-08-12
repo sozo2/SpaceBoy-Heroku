@@ -23,7 +23,7 @@ class Login extends Component {
 
     handleSubmit = event => {
         event.preventDefault()
-        axios.post(process.env.REACT_APP_API_ROOT+ '/api/user/validate-login', {username:this.state.username, password:this.state.password})
+        axios.post(process.env.MONGODB_URI+ '/api/user/validate-login', {username:this.state.username, password:this.state.password})
         .then((res) => {
             if(res.data.valid) {
                 console.log("LOGIN USER DATA");

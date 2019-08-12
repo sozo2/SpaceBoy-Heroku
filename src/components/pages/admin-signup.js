@@ -30,7 +30,7 @@ class AdminSignup extends Component {
     handleSubmit = event => {
         event.preventDefault()
         if (this.state.password==this.state.confirm_password && this.state.admin_token==this.ADMIN_TOKEN) {
-            axios.post(process.env.REACT_APP_API_ROOT+'/api/user/register', this.state)
+            axios.post(process.env.MONGODB_URI+'/api/user/register', this.state)
             .then((res) => {
                 if(res.data.valid) {
                     console.log(res.data.user.username + " signed up");

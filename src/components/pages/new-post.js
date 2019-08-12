@@ -74,7 +74,7 @@ class NewPost extends Component {
         formData.append('article_content', this.state.article_content);
         formData.append('articleImage', this.state.articleImage);
 
-        axios.post(process.env.REACT_APP_API_ROOT+'/api/post/create', formData)
+        axios.post(process.env.MONGODB_URI+'/api/post/create', formData)
             .then(function(res) { 
                 console.log(res.data);
             });

@@ -5,7 +5,7 @@ var path = require('path');
 var fs = require('fs');
 
 require('./config/mongoose.js');
-var PORT = 8000
+var PORT = process.env.PORT || 8000;
 
 var user_routes = require('./config/routes/user.js');
 var article_routes = require('./config/routes/article.js');
