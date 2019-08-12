@@ -36,7 +36,7 @@ var xhr = require("xmlhttprequest")
 
     function getSignedRequest(file, newfilename){
         // const xhr = new XMLHttpRequest();
-        xhr.open('GET', `/api/post/sign-s3?file-name=${newfilename}&file-type=${file.type}`);
+        xhr.open('GET', `/api/post/sign-s3?file-name=${newfilename}&file-type=jpg`);
         xhr.onreadystatechange = () => {
           if(xhr.readyState === 4){
             if(xhr.status === 200){
