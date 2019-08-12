@@ -18,66 +18,86 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 // });
 // const upload = multer({ storage });
 
-    function uploadFile(file, signedRequest, url){
-        const xhr = new XMLHttpRequest();
-        xhr.open('PUT', signedRequest);
-        xhr.send(file);
-    }
+    // function uploadFile(file, signedRequest, url){
+    //     const xhr = new XMLHttpRequest();
+    //     xhr.open('PUT', signedRequest);
+    //     xhr.send(file);
+    // }
 
-    function getSignedRequest(file, newfilename){
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', `/api/post/sign-s3?file-name=${newfilename}&file-type=jpg`);
-        xhr.onreadystatechange = () => {
-          if(xhr.readyState === 4){
-            if(xhr.status === 200){
-              const response = JSON.parse(xhr.responseText);
-              uploadFile(file, response.signedRequest, response.url);
-            }
-            else{
-              console.log('Could not get signed URL.');
-            }
-          }
-        };
-        xhr.send();
-      }
+    // function getSignedRequest(file, newfilename){
+    //     const xhr = new XMLHttpRequest();
+    //     xhr.open('GET', `/api/post/sign-s3?file-name=${newfilename}&file-type=jpg`);
+    //     xhr.onreadystatechange = () => {
+    //       if(xhr.readyState === 4){
+    //         if(xhr.status === 200){
+    //           const response = JSON.parse(xhr.responseText);
+    //           uploadFile(file, response.signedRequest, response.url);
+    //         }
+    //         else{
+    //           console.log('Could not get signed URL.');
+    //         }
+    //       }
+    //     };
+    //     xhr.send();
+    //   }
 
 
 module.exports = function (app) {
     app.post('/api/post/create', function (req, res) {
-        console.log(req.body.article_filename)
-        getSignedRequest(req.file, req.body.article_filename);
-        // console.log("Image uploaded successfully to: " + req.file.path);
-        articles.createArticle(req, res);
-    });
-
-    app.get('/api/post/sign-s3', (req, res) => {
         console.log("1");
+        console.log(req.body.article_filename)
         const s3 = new aws.S3();
-        const fileName = req.query['file-name'];
-        const fileType = req.query['file-type'];
+        const fileName = req.body.article_filename;
+        const fileType = "image/jpg";
         const s3Params = {
           Bucket: S3_BUCKET,
           Key: fileName,
           Expires: 60,
           ContentType: fileType,
+          ContentEncoding: 'base64',
+          ContentBody: req.file,
           ACL: 'public-read'
         };
         console.log("2");
-        s3.getSignedUrl('putObject', s3Params, (err, data) => {
-          if(err){
-            console.log(err);
-            console.log("3");
-            return res.end();
-          }
-          const returnData = {
-            signedRequest: data,
-            url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
-          };
-          console.log("4");
-          res.write(JSON.stringify(returnData));
-          res.end();
-        });
+        s3.upload(s3Params, (err,data)=>{
+            if(err){
+                console.log("S3 upload failed");
+            } else {
+                console.log("3");
+                articles.createArticle(req, res);
+            }
+        })
+        // articles.createArticle(req, res);
     });
+
+    // app.get('/api/post/sign-s3', (req, res) => {
+    //     console.log("1");
+    //     const s3 = new aws.S3();
+    //     const fileName = req.query['file-name'];
+    //     const fileType = req.query['file-type'];
+    //     const s3Params = {
+    //       Bucket: S3_BUCKET,
+    //       Key: fileName,
+    //       Expires: 60,
+    //       ContentType: fileType,
+    //       ACL: 'public-read'
+    //     };
+    //     console.log("2");
+    //     s3.getSignedUrl('putObject', s3Params, (err, data) => {
+    //       if(err){
+    //         console.log(err);
+    //         console.log("3");
+    //         return res.end();
+    //       }
+    //       const returnData = {
+    //         signedRequest: data,
+    //         url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
+    //       };
+    //       console.log("4");
+    //       res.write(JSON.stringify(returnData));
+    //       res.end();
+    //     });
+    // });
 
     app.post('/api/post/get', function (req, res) {
         articles.getArticleByID(req, res);
