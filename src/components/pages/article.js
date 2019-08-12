@@ -3,6 +3,7 @@ import axios from 'axios';
 import moment from 'moment';
 import { TiCode } from "react-icons/ti";
 import { FiArrowLeft, FiTrash2 } from "react-icons/fi";
+import uuid from 'uuid';
 
 class Article extends Component {
 
@@ -109,6 +110,7 @@ class Article extends Component {
         }
         console.log("check image source url:")
         console.log(this.state.imageSrc);
+        console.log(uuid());
         return (
         <div className="postContainer">
             <div id="post-icon-box">
@@ -118,7 +120,8 @@ class Article extends Component {
             </div>
             <div id="post-center">
                 <div id="post-section-1">
-                    <img className="articleTitleImage" alt="" src={this.state.imageSrc}/>
+                    <img className="articleTitleImage" alt="" src="https://spaceboy.s3.us-east-2.amazonaws.com/GreatMountain.jpg"/>
+                    {/* <img className="articleTitleImage" alt="" src={this.state.imageSrc}/> */}
                 </div>
                 <div id="post-section-2">
                     <h1>{this.state.article.title}</h1>
