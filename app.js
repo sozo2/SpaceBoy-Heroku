@@ -26,7 +26,7 @@ var whitelisted = ['http://localhost:3000',
                   'http://localhost:8000',
                   'http://samzoeller.com',
                   'https://spaceboy.herokuapp.com',
-                  'https://spaceboy.s3.us-east-2.amazonaws.com/'];
+                  'https://spaceboy.s3.us-east-2.amazonaws.com'];
 app.use(cors({
   origin: function(origin, callback){
     if(!origin) return callback(null, true);
