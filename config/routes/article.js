@@ -6,7 +6,7 @@ var aws = require('aws-sdk');
 // var S3_BUCKET = process.env.S3_BUCKET;
 // aws.config.region = 'eu-east-2';
 // aws.config.bucket = S3_BUCKET;
-var multerS3 = require('multer-s3');
+// var multerS3 = require('multer-s3');
 var s3 = new aws.S3({
     region: 'us-east-2',
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
@@ -26,45 +26,38 @@ var s3 = new aws.S3({
 
 
 // const upload = multer({ storage });
-var upload = multer({
-    storage: multerS3({
-        s3: s3,
-        bucket: 'spaceboy',
-        ACL: 'public-read',
-        key: function (req, file, cb) {
-            // const newFilename = `${uuidv4()}${path.extname(file.originalname)}`;
-            // cb(null, file.originalname);
-            cb(null, file.originalname); //use Date.now() for unique file keys
-        }
-    })
-});
+// var upload = multer({
+//     storage: multerS3({
+//         s3: s3,
+//         bucket: 'spaceboy',
+//         ACL: 'public-read',
+//         key: function (req, file, cb) {
+//             // const newFilename = `${uuidv4()}${path.extname(file.originalname)}`;
+//             // cb(null, file.originalname);
+//             cb(null, file.originalname); //use Date.now() for unique file keys
+//         }
+//     })
+// });
 
 
 module.exports = function (app) {
-    app.post('/api/post/create', upload.single('articleImage'), function (req, res) {
-        // console.log("1");
-        // console.log(req.body.article_filename)
-        // const s3 = new aws.S3();
-        // const fileName = req.body.article_filename;
-        // const fileType = "image/jpg";
-        // const s3Params = {
-        //   Bucket: S3_BUCKET,
-        //   Key: fileName,
-        //   Expires: 60,
-        //   ContentType: fileType,
-        //   ContentEncoding: 'base64',
-        //   ContentBody: req.file,
-        //   ACL: 'public-read'
-        // };
-        // console.log("2");
-        // s3.upload(s3Params, (err,data)=>{
-        //     if(err){
-        //         console.log("S3 upload failed");
-        //     } else {
-        //         console.log("3");
-        //         articles.createArticle(req, res);
-        //     }
-        // })
+    app.post('/api/post/create', function (req, res) {
+        const file = req.body.articleImage;
+        const params = {
+            Bucket: 'spaceboy',
+            Key: req.body.article_src,
+            ACL: 'public-read',
+            Body: file
+        };
+
+        s3.putObject(params, function (err, data) {
+            if (err) {
+                console.log("Error: ", err);
+            } else {
+                console.log(data);
+            }
+        });
+
         console.log("Image uploaded successfully to: " + req.file.path);
         articles.createArticle(req, res);
     });

@@ -75,7 +75,7 @@ class NewPost extends Component {
         formData.append('article_description', this.state.article_description);
         formData.append('article_category', this.state.article_category);
         formData.append('article_content', this.state.article_content);
-        // formData.append('article_tags', []);
+        formData.append('article_src', newfilename);
         formData.append('articleImage', this.state.articleImage);
 
         axios.post('/api/post/create', formData)
