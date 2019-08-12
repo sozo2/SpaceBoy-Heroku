@@ -24,7 +24,8 @@ app.use(express.static(path.join(__dirname, 'build')));
 
 var whitelisted = ['http://localhost:3000',
                   'http://localhost:8000',
-                  'http://samzoeller.com'];
+                  'http://samzoeller.com',
+                  'https://spaceboy.herokuapp.com'];
 app.use(cors({
   origin: function(origin, callback){
     if(!origin) return callback(null, true);
