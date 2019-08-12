@@ -81,25 +81,18 @@ class NewPost extends Component {
         axios.post('/api/post/create', formData)
             .then(function(res) { 
                 console.log(res.data);
-                this.setState({
-                    article_title: '',
-                    article_description: '',
-                    article_category: '',
-                    article_tags: [],
-                    article_content: '',
-                    articleImage: ''
-                });
                 this.props.history.push("/");
             });
 
-        // this.setState({
-        //     article_title: '',
-        //     article_description: '',
-        //     article_category: '',
-        //     article_tags: [],
-        //     article_content: '',
-        //     articleImage: ''
-        // });
+
+        this.setState({
+            article_title: '',
+            article_description: '',
+            article_category: '',
+            article_tags: [],
+            article_content: '',
+            articleImage: ''
+        });
         // this.props.history.push("/");
     }
 

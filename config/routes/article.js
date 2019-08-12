@@ -21,9 +21,9 @@ module.exports = function (app) {
         const file = req.file;
         const params = {
             Bucket: 'spaceboy',
-            Key: req.body.article_src,
+            Key: req.file.originalname,
             ACL: 'public-read',
-            Body: req.file
+            Body: req.file.buffer
         };
         console.log(params);
         s3.putObject(params, function (err, data) {
