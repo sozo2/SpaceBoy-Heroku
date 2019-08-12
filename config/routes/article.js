@@ -5,7 +5,8 @@ var path = require("path");
 var aws = require('aws-sdk');
 var S3_BUCKET = process.env.S3_BUCKET;
 aws.config.region = 'eu-east-2';
-var s3 = require('multer-s3');
+var s3 = new aws.S3();
+var multerS3 = require('multer-s3');
 
 // const storage = multer.diskStorage({
 //     destination: (req, file, cb) => {
@@ -20,18 +21,27 @@ var s3 = require('multer-s3');
 
 // const upload = multer({ storage });
 var upload = multer({
-    storage: s3({
-        dirname: '/',
-        bucket: S3_BUCKET,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-        region: 'us-east-2',
-        filename: function (req, file, cb) {
-            const newFilename = `${uuidv4()}${path.extname(file.originalname)}`;
-            cb(null, newFilename);
-            // cb(null, file.originalname); //use Date.now() for unique file keys
-        }
-    })
+    // storage: multerS3({
+    //     dirname: '/',
+    //     bucket: S3_BUCKET,
+    //     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    //     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    //     region: 'us-east-2',
+    //     filename: function (req, file, cb) {
+    //         const newFilename = `${uuidv4()}${path.extname(file.originalname)}`;
+    //         cb(null, newFilename);
+    //         // cb(null, file.originalname); //use Date.now() for unique file keys
+    //     }
+        storage: multerS3({
+            s3: s3,
+            bucket: S3_BUCKET,
+            key: function (req, file, cb) {
+                const newFilename = `${uuidv4()}${path.extname(file.originalname)}`;
+                cb(null, newFilename);
+                // cb(null, file.originalname); //use Date.now() for unique file keys
+            }
+        })
+    // })
 });
 
 
