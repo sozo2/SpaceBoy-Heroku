@@ -9,9 +9,7 @@ var PORT = process.env.PORT || 8000;
 
 var app = express();
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: true
-}))
+// app.use(bodyParser.urlencoded());
 app.use(express.static('uploads'));
 app.use(express.static(path.join(__dirname, 'build')));
 
