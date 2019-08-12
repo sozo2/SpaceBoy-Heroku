@@ -5,7 +5,7 @@ var path = require("path");
 var aws = require('aws-sdk');
 var S3_BUCKET = process.env.S3_BUCKET;
 aws.config.region = 'eu-east-2';
-var xhr = require("xmlhttprequest")
+require("xmlhttprequest");
 
 // const storage = multer.diskStorage({
 //     destination: (req, file, cb) => {
@@ -19,7 +19,7 @@ var xhr = require("xmlhttprequest")
 // const upload = multer({ storage });
 
     function uploadFile(file, signedRequest, url){
-        // const xhr = new XMLHttpRequest();
+        const xhr = new XMLHttpRequest();
         xhr.open('PUT', signedRequest);
         xhr.onreadystatechange = () => {
           if(xhr.readyState === 4){
@@ -35,7 +35,7 @@ var xhr = require("xmlhttprequest")
     }
 
     function getSignedRequest(file, newfilename){
-        // const xhr = new XMLHttpRequest();
+        const xhr = new XMLHttpRequest();
         xhr.open('GET', `/api/post/sign-s3?file-name=${newfilename}&file-type=jpg`);
         xhr.onreadystatechange = () => {
           if(xhr.readyState === 4){
