@@ -29,6 +29,9 @@ var ArticleSchema = new mongoose.Schema({
         data: Buffer, 
         contentType: String 
     },
+    image_src:{
+        type: String
+    },
     mark_as_deleted: {
         type: Boolean
     }},

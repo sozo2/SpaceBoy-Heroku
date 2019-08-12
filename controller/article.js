@@ -18,10 +18,11 @@ module.exports = {
                     tags: [],
                     content: req.body.article_content,
                     comments: [],
-                    image: {
-                        data: req.file.path,
-                        contentType: req.file.mimetype
-                    },
+                    // image: {
+                    //     data: req.file.path,
+                    //     contentType: req.file.mimetype
+                    // },
+                    image_src: "https://spaceboy.s3.us-east-2.amazonaws.com/" + req.body.article_filename,
                     mark_as_deleted: false 
                 });
                 user._articles.push(article);
@@ -64,10 +65,11 @@ module.exports = {
                 article.description = req.body.description;
                 article.category = req.body.description;
                 article.tags = req.body.tags;
-                article.image = {
-                    data: req.file.path,
-                    contentType: req.file.mimetype
-                }
+                // article.image = {
+                //     data: req.file.path,
+                //     contentType: req.file.mimetype
+                // }
+                article.image_src = "https://spaceboy.s3.us-east-2.amazonaws.com/" + req.body.article_filename;
                 article.save(function(err, article){
                     if(err){
                         console.log(err);

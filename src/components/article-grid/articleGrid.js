@@ -41,7 +41,7 @@ class articleGrid extends Component {
     render() {
         return (
             // <div id="article-grid-container"></div>
-            <div id="article-grid-container">{this.props.allArticles.map((article) => <ArticleTile key={article._id} id={article._id} postTitle={article.title} postDate={article.created_at} postDescription={article.description} articleImage={article.image ? this.configureImageSrc(article.image) : ""}/>)}</div>
+            <div id="article-grid-container">{this.props.allArticles.map((article) => <ArticleTile key={article._id} id={article._id} postTitle={article.title} postDate={article.created_at} postDescription={article.description}/>)}</div>
         )
     }
 

@@ -14,7 +14,8 @@ class Article extends Component {
                 title: "",
                 content: "",
                 description: "",
-                created_at: ""
+                created_at: "",
+                image_src: ""
             },
             imageSrc: "",
             createdBy: "",
@@ -37,9 +38,10 @@ class Article extends Component {
                     title: res.data.title,
                     content: res.data.content,
                     description: res.data.description,
-                    created_at: moment(res.data.created_at).format('MMMM DD, YYYY')
+                    created_at: moment(res.data.created_at).format('MMMM DD, YYYY'),
+                    image_src: res.data.image_src
                 },
-                imageSrc: res.data.image ? this.configureImageSrc(res.data.image.data.data) : "",
+                // imageSrc: res.data.image ? this.configureImageSrc(res.data.image.data.data) : "",
                 createdBy: res.data._creator.first_name + " " + res.data._creator.last_name
             });
         });
@@ -109,8 +111,8 @@ class Article extends Component {
             deleteDiv = null;
         }
         console.log("check image source url:")
-        console.log(this.state.imageSrc);
-        console.log(uuid());
+        console.log(this.state.article.image_src);
+        // console.log(uuid());
         return (
         <div className="postContainer">
             <div id="post-icon-box">
@@ -120,7 +122,8 @@ class Article extends Component {
             </div>
             <div id="post-center">
                 <div id="post-section-1">
-                    <img className="articleTitleImage" alt="" src="https://s3.amazonaws.com/spaceboy/spaceboy/GreatMountain.jpg"/>
+                    <img className="articleTitleImage" alt="" src={this.state.article.image_src}/>
+                    {/* <img className="articleTitleImage" alt="" src="https://s3.amazonaws.com/spaceboy/spaceboy/GreatMountain.jpg"/> */}
                     {/* <img className="articleTitleImage" alt="" src={this.state.imageSrc}/> */}
                 </div>
                 <div id="post-section-2">

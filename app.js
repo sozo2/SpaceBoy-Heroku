@@ -38,6 +38,10 @@ app.use(cors({
   }
 }));
 
+var aws = require('aws-sdk');
+var S3_BUCKET = process.env.S3_BUCKET;
+aws.config.region = 'eu-east-2';
+
 user_routes(app);
 article_routes(app);
 comment_routes(app);
