@@ -14,42 +14,20 @@ var s3 = new aws.S3({
     bucket: 'spaceboy'
 });
 
-// const storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//         cb(null, './uploads');
-//     },
-//     filename: (req, file, cb) => {
-//         const newFilename = `${uuidv4()}${path.extname(file.originalname)}`;
-//         cb(null, newFilename);
-//     },
-// });
-
-
-// const upload = multer({ storage });
-// var upload = multer({
-//     storage: multerS3({
-//         s3: s3,
-//         bucket: 'spaceboy',
-//         ACL: 'public-read',
-//         key: function (req, file, cb) {
-//             // const newFilename = `${uuidv4()}${path.extname(file.originalname)}`;
-//             // cb(null, file.originalname);
-//             cb(null, file.originalname); //use Date.now() for unique file keys
-//         }
-//     })
-// });
-
-
 module.exports = function (app) {
+
     app.post('/api/post/create', function (req, res) {
+        console.log("CREATE REQUEST");
+        console.log(req);
+        console.log(req.body.article_src);
         const file = req.body.articleImage;
         const params = {
             Bucket: 'spaceboy',
-            Key: req.body.article_src,
+            Key: "thisisatest.jpg",
             ACL: 'public-read',
             Body: file
         };
-
+        console.log(params);
         s3.putObject(params, function (err, data) {
             if (err) {
                 console.log("Error: ", err);
@@ -61,35 +39,6 @@ module.exports = function (app) {
         console.log("Image uploaded successfully to: " + req.file.path);
         articles.createArticle(req, res);
     });
-
-    // app.get('/api/post/sign-s3', (req, res) => {
-    //     console.log("1");
-    //     const s3 = new aws.S3();
-    //     const fileName = req.query['file-name'];
-    //     const fileType = req.query['file-type'];
-    //     const s3Params = {
-    //       Bucket: S3_BUCKET,
-    //       Key: fileName,
-    //       Expires: 60,
-    //       ContentType: fileType,
-    //       ACL: 'public-read'
-    //     };
-    //     console.log("2");
-    //     s3.getSignedUrl('putObject', s3Params, (err, data) => {
-    //       if(err){
-    //         console.log(err);
-    //         console.log("3");
-    //         return res.end();
-    //       }
-    //       const returnData = {
-    //         signedRequest: data,
-    //         url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
-    //       };
-    //       console.log("4");
-    //       res.write(JSON.stringify(returnData));
-    //       res.end();
-    //     });
-    // });
 
     app.post('/api/post/get', function (req, res) {
         articles.getArticleByID(req, res);
