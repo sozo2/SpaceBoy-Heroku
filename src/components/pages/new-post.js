@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import {getUser} from '../services/auth-service';
 import uuid from 'uuid';
+import XMLHttpRequest from "xmlhttprequest";
 
 class NewPost extends Component {
 
