@@ -7,7 +7,7 @@ var User = mongoose.model('User');
 
 module.exports = {
 
-    createArticle: function (req, res) {
+    createArticle: function (req, res, newfilename) {
         console.log(req.body.article_creator);
         console.log("USER ^^ BODY vv");
         console.log(req.body);
@@ -29,7 +29,7 @@ module.exports = {
                     //     data: req.file.path,
                     //     contentType: req.file.mimetype
                     // },
-                    image_src: "https://spaceboy.s3.us-east-2.amazonaws.com/" + req.file.path,
+                    image_src: "https://spaceboy.s3.us-east-2.amazonaws.com/" + newfilename,
                     mark_as_deleted: false 
                 });
                 console.log("456");

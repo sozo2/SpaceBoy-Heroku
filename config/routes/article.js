@@ -1,6 +1,6 @@
 var articles = require('../../controller/article.js');
 var multer  = require('multer');
-const uuidv4 = require('uuid/v4');
+const uuid = require('uuid/v4');
 
 var aws = require('aws-sdk');
 var s3 = new aws.S3({
@@ -10,7 +10,7 @@ var s3 = new aws.S3({
     bucket: 'spaceboy'
 });
 
-var upload = multer({destination: '/', filename:`${uuidv4()}${path.extname(file.originalname)}`});
+var upload = multer({destination: '/'});
 
 module.exports = function (app) {
 
@@ -18,9 +18,10 @@ module.exports = function (app) {
         console.log("REQUEST:");
         console.log(req.body);
         console.log(req.file);
+        let newfilename = uuid() + req.file.originalname;
         const params = {
             Bucket: 'spaceboy',
-            Key: req.file.path,
+            Key: newfilename,
             ACL: 'public-read',
             Body: req.file.buffer
         };
@@ -34,7 +35,7 @@ module.exports = function (app) {
         });
 
         console.log("Image uploaded successfully to: " + req.file.path);
-        articles.createArticle(req, res);
+        articles.createArticle(req, res, newfilename);
     });
 
     app.post('/api/post/get', function (req, res) {
