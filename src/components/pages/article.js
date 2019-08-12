@@ -120,7 +120,7 @@ class Article extends Component {
             </div>
             <div id="post-center">
                 <div id="post-section-1">
-                    <img className="articleTitleImage" alt="" src="https://spaceboy.s3.us-east-2.amazonaws.com/GreatMountain.jpg"/>
+                    <img className="articleTitleImage" alt="" src="https://s3.amazonaws.com/spaceboy/spaceboy/GreatMountain.jpg"/>
                     {/* <img className="articleTitleImage" alt="" src={this.state.imageSrc}/> */}
                 </div>
                 <div id="post-section-2">
