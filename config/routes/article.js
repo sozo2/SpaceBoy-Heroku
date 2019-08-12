@@ -5,6 +5,7 @@ var path = require("path");
 var aws = require('aws-sdk');
 var S3_BUCKET = process.env.S3_BUCKET;
 aws.config.region = 'eu-east-2';
+aws.config.bucket = S3_BUCKET;
 var s3 = new aws.S3();
 var multerS3 = require('multer-s3');
 
