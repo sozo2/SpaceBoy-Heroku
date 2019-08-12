@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import {getUser} from '../services/auth-service';
 import uuid from 'uuid';
-import XMLHttpRequest from "xmlhttprequest";
 
 class NewPost extends Component {
 
@@ -64,38 +63,38 @@ class NewPost extends Component {
         });
     }
 
-    uploadFile(file, signedRequest, url){
-        const xhr = new XMLHttpRequest();
-        xhr.open('PUT', signedRequest);
-        xhr.onreadystatechange = () => {
-          if(xhr.readyState === 4){
-            if(xhr.status === 200){
-              console.log("Image upload successful: " + url);
-            }
-            else{
-              console.log('Could not upload file.');
-            }
-          }
-        };
-        xhr.send(file);
-    }
+    // uploadFile(file, signedRequest, url){
+    //     const xhr = new XMLHttpRequest();
+    //     xhr.open('PUT', signedRequest);
+    //     xhr.onreadystatechange = () => {
+    //       if(xhr.readyState === 4){
+    //         if(xhr.status === 200){
+    //           console.log("Image upload successful: " + url);
+    //         }
+    //         else{
+    //           console.log('Could not upload file.');
+    //         }
+    //       }
+    //     };
+    //     xhr.send(file);
+    // }
 
-    getSignedRequest(file, newfilename){
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', `/api/post/sign-s3?file-name=${file.name}&file-type=${file.type}`);
-        xhr.onreadystatechange = () => {
-          if(xhr.readyState === 4){
-            if(xhr.status === 200){
-              const response = JSON.parse(xhr.responseText);
-              uploadFile(file, response.signedRequest, response.url);
-            }
-            else{
-              alert('Could not get signed URL.');
-            }
-          }
-        };
-        xhr.send();
-      }
+    // getSignedRequest(file, newfilename){
+    //     const xhr = new XMLHttpRequest();
+    //     xhr.open('GET', `/api/post/sign-s3?file-name=${file.name}&file-type=${file.type}`);
+    //     xhr.onreadystatechange = () => {
+    //       if(xhr.readyState === 4){
+    //         if(xhr.status === 200){
+    //           const response = JSON.parse(xhr.responseText);
+    //           uploadFile(file, response.signedRequest, response.url);
+    //         }
+    //         else{
+    //           alert('Could not get signed URL.');
+    //         }
+    //       }
+    //     };
+    //     xhr.send();
+    //   }
 
     onSubmit(e) {
         e.preventDefault();
@@ -107,9 +106,9 @@ class NewPost extends Component {
         formData.append('article_description', this.state.article_description);
         formData.append('article_category', this.state.article_category);
         formData.append('article_content', this.state.article_content);
-        formData.append('article_filename', this.state.article_content);
-        // formData.append('article_tags', []);
-        this.getSignedRequest(this.state.articleImage, newfilename);
+        formData.append('article_filename', newfilename);
+        formData.append('article_tags', []);
+        formData.append('articleImage', this.state.articleImage);
 
         axios.post('/api/post/create', formData)
             .then(function(res) { 

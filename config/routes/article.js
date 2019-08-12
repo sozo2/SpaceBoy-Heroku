@@ -5,6 +5,7 @@ var path = require("path");
 var aws = require('aws-sdk');
 var S3_BUCKET = process.env.S3_BUCKET;
 aws.config.region = 'eu-east-2';
+var xhr = require("xmlhttprequest")
 
 // const storage = multer.diskStorage({
 //     destination: (req, file, cb) => {
@@ -17,9 +18,43 @@ aws.config.region = 'eu-east-2';
 // });
 // const upload = multer({ storage });
 
+    function uploadFile(file, signedRequest, url){
+        // const xhr = new XMLHttpRequest();
+        xhr.open('PUT', signedRequest);
+        xhr.onreadystatechange = () => {
+          if(xhr.readyState === 4){
+            if(xhr.status === 200){
+              console.log("Image upload successful: " + url);
+            }
+            else{
+              console.log('Could not upload file.');
+            }
+          }
+        };
+        xhr.send(file);
+    }
+
+    function getSignedRequest(file, newfilename){
+        // const xhr = new XMLHttpRequest();
+        xhr.open('GET', `/api/post/sign-s3?file-name=${newfilename}&file-type=${file.type}`);
+        xhr.onreadystatechange = () => {
+          if(xhr.readyState === 4){
+            if(xhr.status === 200){
+              const response = JSON.parse(xhr.responseText);
+              uploadFile(file, response.signedRequest, response.url);
+            }
+            else{
+              console.log('Could not get signed URL.');
+            }
+          }
+        };
+        xhr.send();
+      }
+
 
 module.exports = function (app) {
     app.post('/api/post/create', function (req, res) {
+        getSignedRequest(req.file, req.body.article_filename);
         // console.log("Image uploaded successfully to: " + req.file.path);
         articles.createArticle(req, res);
     });
