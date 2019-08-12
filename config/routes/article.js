@@ -51,6 +51,7 @@ module.exports = function (app) {
     });
 
     app.get('/api/post/sign-s3', (req, res) => {
+        console.log("1");
         const s3 = new aws.S3();
         const fileName = req.query['file-name'];
         const fileType = req.query['file-type'];
@@ -61,16 +62,18 @@ module.exports = function (app) {
           ContentType: fileType,
           ACL: 'public-read'
         };
-      
+        console.log("2");
         s3.getSignedUrl('putObject', s3Params, (err, data) => {
           if(err){
             console.log(err);
+            console.log("3");
             return res.end();
           }
           const returnData = {
             signedRequest: data,
             url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
           };
+          console.log("4");
           res.write(JSON.stringify(returnData));
           res.end();
         });
