@@ -72,7 +72,7 @@ class Article extends Component {
 
     configureImageSrc(articleImage){
         var imageStr = this.arrayBufferToBase64(articleImage);
-        return "../../../" + this.decodeBase64(imageStr);
+        return this.decodeBase64(imageStr);
         // return process.env.REACT_APP_API_ROOT + "/" + this.decodeBase64(imageStr);
         // return this.decodeBase64(imageStr);
     }
