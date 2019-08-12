@@ -38,7 +38,7 @@ class GridWrapper extends Component {
     }
 
     grabAllArticles = () => {
-        axios.post(process.env.MONGODB_URI+'/api/post/get-all', {category: this.props.queryCategory})
+        axios.post('/api/post/get-all', {category: this.props.queryCategory})
         .then((res) => {
             console.log(res.data);
             this.setState({
