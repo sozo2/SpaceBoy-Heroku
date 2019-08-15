@@ -7,7 +7,7 @@ module.exports = {
     createComment: function (req, res) {
         User.find({username: req.body.username}, function(err, user){
             if (err){
-                console.log("can't make comment because not logged in");
+                // console.log("can't make comment because not logged in");
                 res.json({error: "user not found"});
             } else {
                 var comment = new Comment({
@@ -29,8 +29,6 @@ module.exports = {
     },
 
     deleteComment: function (req, res) {
-        //handle comment deletion/editing security on the front end by not exposing
-        //button that hits the api 
         Comment.find({_id: req.body._id}, function(err, comment){
             if (err){
                 console.log(err);
@@ -39,10 +37,10 @@ module.exports = {
                 comment.mark_as_deleted = true;
                 comment.save(function (err, comment) {
                     if (err) {
-                        console.log(err);
+                        // console.log(err);
                         res.json(err);
                     } else {
-                        console.log("comment deleted");
+                        // console.log("comment deleted");
                         res.json(comment);
                     }
                 });
@@ -50,9 +48,7 @@ module.exports = {
         });
     },
 
-    updateComment: function (req, res) {
-        //handle comment deletion/editing security on the front end by not exposing
-        //button that hits the api 
+    updateComment: function (req, res) { 
         Comment.find({_id: req.body._id}, function(err, comment){
             if (err){
                 console.log(err);
@@ -61,10 +57,10 @@ module.exports = {
                 comment.content = req.body.content;
                 comment.save(function (err, comment) {
                     if (err) {
-                        console.log(err);
+                        // console.log(err);
                         res.json(err);
                     } else {
-                        console.log("comment updated successfully");
+                        // console.log("comment updated successfully");
                         res.json(comment);
                     }
                 });

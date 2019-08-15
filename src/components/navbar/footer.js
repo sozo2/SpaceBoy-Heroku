@@ -1,5 +1,4 @@
 import React, { Component }  from "react";
-import { WiAlien } from "react-icons/wi";
 
 class Footer extends Component {
     

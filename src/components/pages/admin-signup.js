@@ -25,7 +25,7 @@ class AdminSignup extends Component {
         })
     }
 
-    ADMIN_TOKEN = "thisisanadmintoken123"
+    ADMIN_TOKEN = process.env.ADMIN_TOKEN
 
     handleSubmit = event => {
         event.preventDefault()

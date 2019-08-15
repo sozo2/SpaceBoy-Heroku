@@ -15,9 +15,6 @@ var upload = multer({destination: '/'});
 module.exports = function (app) {
 
     app.post('/api/post/create', upload.single("articleImage"), function (req, res) {
-        console.log("REQUEST:");
-        console.log(req.body);
-        console.log(req.file);
         let newfilename = uuid() + req.file.originalname;
         const params = {
             Bucket: 'spaceboy',
@@ -25,7 +22,6 @@ module.exports = function (app) {
             ACL: 'public-read',
             Body: req.file.buffer
         };
-        console.log(params);
         s3.putObject(params, function (err, data) {
             if (err) {
                 console.log("Error: ", err);
@@ -51,7 +47,6 @@ module.exports = function (app) {
     });
 
     app.post('/api/post/delete', function (req, res) {
-        console.log(req.body);
         articles.deleteArticle(req, res);
     });
 

@@ -4,9 +4,6 @@ var User = mongoose.model('User');
 module.exports = {
     
     createUser: function (req, res) {
-        //if there needs to be warning messages, push to array and return
-        //messages can be displayed as a bulleted list on front end
-        //check how model validation returns on json
         var user = new User({
             first_name: req.body.first_name,
             last_name: req.body.last_name,
@@ -31,7 +28,6 @@ module.exports = {
     },
 
     validateLogin: function (req, res) {
-        //check if username exists, 
         User.findOne({username: req.body.username}, function(err, user){
             if(err){
                 console.log(err);

@@ -27,7 +27,6 @@ class SearchBar extends Component {
 
     submitSearch(e) {
         e.preventDefault();
-        console.log(this.state.searchString)
         this.props.updateSearchString({searchString: this.state.searchString});
     }
 

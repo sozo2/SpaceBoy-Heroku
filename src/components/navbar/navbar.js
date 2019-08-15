@@ -33,8 +33,6 @@ class Navbar extends Component {
                 <div className="category"><Link to={"/politics"} className="linkStyle category-link">politics</Link></div>
                 <div className="category"><Link to={"/science"} className="linkStyle category-link">science</Link></div>
             </div>
-            {/* {this.props.loggedInAsAdmin ? <Link to={"/new-post"} style={{ textShadow: `none`, backgroundImage: `none` }}> - New Post</Link> : null } */}
-            {/* {this.props.isLoggedIn ? <div style={{ float: `right` }}><button style={{ textShadow: `none`, backgroundImage: `none` }} onClick={this.props.updateStateAfterLogout}>Logout</button><p>Welcome, {this.props.userFirstName}</p></div> :  <Link to="/login" style={{ textShadow: `none`, backgroundImage: `none` }}> - Login</Link>} */}
         </div>
 )}}
 

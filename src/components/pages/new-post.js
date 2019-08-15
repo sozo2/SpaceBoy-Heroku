@@ -67,8 +67,6 @@ class NewPost extends Component {
     onSubmit(e) {
         e.preventDefault();
         let newfilename = uuid() + "." + this.state.articleImage.type.replace(/^.*[\\\/]/, '');
-        console.log(newfilename);
-        console.log(this.state.article_creator);
         let formData = new FormData();
         formData.append('article_creator', this.state.article_creator);
         formData.append('article_title', this.state.article_title);
@@ -101,7 +99,6 @@ class NewPost extends Component {
                 <div id="post-form-container">
                 <h2>Write something new about SPACE!</h2>
                 <form onSubmit={this.onSubmit}>
-                    {/* <input type="hidden" name="article_creator" value="samzoeller"/> */}
                     <div className="form-group"> 
                         <label>Title: </label>
                         <input  type="text"

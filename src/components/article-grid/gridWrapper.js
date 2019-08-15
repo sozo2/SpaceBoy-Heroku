@@ -30,7 +30,6 @@ class GridWrapper extends Component {
     }
 
     updateSearchString = ({searchString}) => {
-        console.log(searchString);
         this.setState({
             searchString: searchString
         });
@@ -40,7 +39,6 @@ class GridWrapper extends Component {
     grabAllArticles = () => {
         axios.post('/api/post/get-all', {category: this.props.queryCategory})
         .then((res) => {
-            console.log(res.data);
             this.setState({
                 articles: this.applySearch(res.data, this.state.searchString)
             });

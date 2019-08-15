@@ -26,8 +26,6 @@ class Login extends Component {
         axios.post('/api/user/validate-login', {username:this.state.username, password:this.state.password})
         .then((res) => {
             if(res.data.valid) {
-                console.log("LOGIN USER DATA");
-                console.log(res.data);
                 this.setState({first_name:res.data.first_name, is_admin:res.data.is_admin});
                 handleLogin(this.state);
                 this.props.updateStateAfterLogin();

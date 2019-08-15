@@ -9,15 +9,9 @@ var PORT = process.env.PORT || 8000;
 
 var app = express();
 app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded());
+
 app.use(express.static('uploads'));
 app.use(express.static(path.join(__dirname, 'build')));
-
-// fs.readdirSync(models_path).forEach(function(file) {
-//   if(file.indexOf('.js') >= 0) {
-//     require(models_path + '/' + file);
-//   }
-// });
 
 var whitelisted = ['http://localhost:3000',
                   'http://localhost:8000',
@@ -36,10 +30,6 @@ app.use(cors({
   }
 }));
 
-// var aws = require('aws-sdk');
-// var S3_BUCKET = process.env.S3_BUCKET;
-// aws.config.region = 'eu-east-2';
-
 var user_routes = require('./config/routes/user.js');
 var article_routes = require('./config/routes/article.js');
 var comment_routes = require('./config/routes/comment.js');
@@ -48,16 +38,6 @@ user_routes(app);
 article_routes(app);
 comment_routes(app);
 
-// var pages_path = path.join(__dirname, '/src');
-// fs.readdirSync(pages_path).forEach(function(file) {
-//   if(file.indexOf('.js') >= 0) {
-//     require(pages_path + '/' + file);
-//   }
-// });
-// app.get('/uploads', (req, res) => {
-//   console.log("HITTING UPLOADS________________");
-//   res.sendFile(path.join(__dirname, '/uploads'));
-// });
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/build/index.html'));
